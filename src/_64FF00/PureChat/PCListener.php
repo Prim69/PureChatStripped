@@ -42,9 +42,7 @@ class PCListener implements Listener{
         /** @var \pocketmine\Player $player */
         $player = $event->getPlayer();
         $levelName = false ? $player->getLevel()->getName() : null;
-
         $nameTag = $this->plugin->getNametag($player, $levelName);
-
         $player->setNameTag($nameTag);
     }
 
@@ -53,14 +51,11 @@ class PCListener implements Listener{
      * @priority HIGH
      */
     public function onPlayerChat(PlayerChatEvent $event){
-		if ($event->isCancelled()) return;
+		if($event->isCancelled()) return;
 		$player = $event->getPlayer();
         $message = $event->getMessage();
-
-        $levelName = $this->plugin->getConfig()->get("enable-multiworld-chat") ? $player->getLevel()->getName() : null;
-
+        $levelName = null;
         $chatFormat = $this->plugin->getChatFormat($player, $message, $levelName);
-
         $event->setFormat($chatFormat);
     }
 }
